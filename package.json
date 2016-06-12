@@ -3,7 +3,8 @@
   "version": "0.0.1",
   "description": "A presentation first given at Mozlondono 2016",
   "scripts": {
-    "start": "ws"
+    "start": "ws",
+    "deploy": "git subtree push --prefix html5 origin gh-pages"
   },
   "local-web-server": {
     "port": 8080,
