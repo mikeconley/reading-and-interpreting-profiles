@@ -1,0 +1,17 @@
+{
+  "name": "reading-and-interpreting-profiles",
+  "version": "0.0.1",
+  "description": "A presentation first given at Mozlondono 2016",
+  "scripts": {
+    "start": "ws"
+  },
+  "local-web-server": {
+    "port": 8080,
+    "directory": "html5/"
+  },
+  "author": "Mike Conley",
+  "license": "MPL",
+  "dependencies": {
+    "local-web-server": "^1.2.6"
+  }
+}
