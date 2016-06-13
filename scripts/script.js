@@ -408,7 +408,7 @@ try {
 }
 
 // Pre-selects the correct current language on the dropdown menu
-document.getElementById('langMenuId').value = lang;
+// document.getElementById('langMenuId').value = lang;
 
 function changeLanguage() {
   var langObj = document.getElementById('langMenuId');

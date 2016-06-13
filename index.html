@@ -12,7 +12,7 @@
 -->
 <head>
   <meta charset="UTF-8">
-  <title>Your talk title here</title>
+  <title>Reading and Interpreting Gecko Profiles</title>
 <!-- 
   If you upload your slides to the web, ensure that you have 
   a good title - this shows up in search results and social
@@ -23,18 +23,17 @@
 </head>
 <body class="list">
   <header class="caption">
-    <h1>Your talk title here</h1>
+    <h1>Reading and Interpreting Gecko Profiles</h1>
     <p class="footer">
-      {Your name}, 
-      {your <a href="http://twitter.com/">@twitter</a> or 
-      <a href="mailto:you@email.com">you@email.com</a>}
+      Mike Conley, :mconley,
+      <a href="http://twitter.com/mikeconley">@mikeconley</a>
     </p>
   </header>
   <aside class="talkdescription">
     <p>This slide deck is using the shower system - roll over the previews to see the notes and click any slide to go into presentation mode. Then use keys to navigate. <button onclick="goFullScreen()">Go fullscreen</button></p>
     <p class="abstract">
       <strong>Abstract: </strong>
-       Add your talk abstract here
+       Gecko has a built-in sampling profiler. Reading Gecko profiles can often reveal bottlenecks that other tools might not. This talk is about doing such readings.
     </p>
   </aside>
 
@@ -44,55 +43,157 @@
   to allow for bookmarking and target jumping.
 -->
 
-  <div id="cover" class="slide"><div>
+  <div id="cover" class="slide oneline"><div>
     <section>
       <header>
-        <h2>The cover slide</h2>
+        <h2>Reading and Interpreting Gecko Profiles</h2>
       </header>
-      <img src="pictures/templatedemos/high-five.jpg" 
-           class="middle shadow" height="400"
-           alt="High-five at the Mozilla Festival!">
-      <small class="byline">
-        {Firstname}, {Lastname}, {Conference}, {Location}, {date}
-      </small>
+    </section>
+  </div></div>
+
+  <div id="hi" class="slide oneline"><div>
+    <section>
+      <header>
+        <h2>Mike Conley, :mconley</h2>
+      </header>
       <footer class="notes">
-        This is a simple cover slide with an image in the middle
+        I wouldn't call myself an expert with the Gecko Profiler. There are other people in this room who probably know more about it than I do. But I'm written some patches for it, I've wrestled with it, and I've gotten useful data out of it. I'm hoping to pass those skills along.
       </footer>
     </section>
   </div></div>
 
+  <div id="crowd_calibration" class="slide oneline"><div>
+    <section>
+      <header>
+        <h2>Crowd Calibration</h2>
+      </header>
+      <footer class="notes">
+        <ul>
+          <li>Any answer is okay - there's no test, and I'm not going to call on you</li>
+          <li>Who here knows what a sampling profiler is?</li>
+          <li>Who here has used the Gecko Profiler Add-on and Cleopatra?</li>
+          <li>Who here has used the DevTools Performance tool?</li>
+          <li>Anyone here from Support or QA?</li>
+        </ul>
+      </footer>
+    </section>
+  </div></div>
+
+  <div id="quick_primer" class="slide oneline"><div>
+    <section>
+      <header>
+        <h2>A Profiling Primer</h2>
+      </header>
+      <footer class="notes">
+        <ul>
+          <li>Snapshots of what Firefox is doing every so often</li>
+          <li>Defaults to every 10 milliseconds</li>
+          <li>We can try to get smaller intervals, but this can affect results</li>
+          <li>Circular buffer, like a flight recorder</li>
+        </ul>
+      </footer>
+    </section>
+  </div></div>
+
+ <div id="general_workflow" class="slide"><div>
+    <section>
+      <header>
+        <h2>General Workflow for Profilers</h2>
+      </header>
+      <ul class="inner">
+        <li class="active">Notice that something is performing poorly</li>
+        <li>Start recording with a profiler</li>
+        <li>Reproduce the poor behaviour</li>
+        <li>Dump the profile</li>
+        <li><strong>Analyze the profile</strong></li>
+      </ul>
+      <footer class="notes">
+        This last one is what I'm hoping to spend most of my time on today.
+      </footer>
+    </section>
+ </div></div>
+
+ <div id="quick_intro_to_gecko_profiler_addons" class="slide oneline"><div>
+    <section>
+      <header>
+        <h2>Quick Intro to the Gecko Profiler Add-on</h2>
+      </header>
+
+      <footer class="notes">
+        <ul>
+          <li>Show where to get it from</li>
+          <li>Show the icon, and the two states</li>
+          <li>Do a quick profile dump</li>
+          <li>Talk about what's in the panel</li>
+          <li>Call out: Stackwalk, JS Profiling, Multi-thread, Firefox Restart, Settings</li>
+        </ul>
+      </footer>
+    </section>
+ </div></div>
+
+ <div id="capturing_good_profiles" class="slide"><div>
+    <section>
+      <header>
+        <h2>Capturing Good Profiles</h2>
+      </header>
+      <ul class="inner">
+        <li class="active">Profile with Nightly</li>
+        <li>Be online</li>
+        <li>Make sure the right threads are being sampled</li>
+        <li>Hope that the Symbol Server is up if you're on Windows</li>
+        <li>Click on "Share" in Cleopatra (or save locally) and post the URL / file</li>
+      </ul>
+      <footer class="notes">
+      </footer>
+    </section>
+ </div></div>
+
+ <div id="exploring_cleopatra" class="slide oneline"><div>
+    <section>
+      <header>
+        <h2>Exploring Cleopatra</h2>
+      </header>
+
+      <footer class="notes">
+        <ul>
+          <li>Cleopatra is kind of a constant work-in-progress</li>
+          <li>There are specialized, and sometimes half-done tools in here</li>
+          <li>There are bugs and UI quirks</li>
+          <li>Histograms / Threads (and Frames), then Samples / Call tree, Selections</li>
+          <li>View Options</li>
+        </ul>
+      </footer>
+    </section>
+ </div></div>
+
+  <div id="questions_so_far_1" class="slide oneline"><div>
+    <section>
+      <header>
+        <h2>Questions so far?</h2>
+      </header>
+      <footer class="notes">
+      </footer>
+    </section>
+  </div></div>
+
+  <div id="example_profiles" class="slide oneline"><div>
+    <section>
+      <header>
+        <h2>Example Profiles</h2>
+      </header>
+      <ul class="inner">
+        <li class="active">Profile with Nightly</li>
+        <li>Be online</li>
+        <li>Make sure the right threads are being sampled</li>
+        <li>Hope that the Symbol Server is up if you're on Windows</li>
+        <li>Click on "Share" in Cleopatra (or save locally) and post the URL / file</li>
+      </ul>
+      <footer class="notes">
+      </footer>
+    </section>
+  </div></div>
 <!-- end slide block -->
-
-  <div id="callout" class="slide"><div>
-    <section>
-      <header>
-        <h2>Callout slide styles</h2>
-      </header>
-      <p>The following are callout slide styles – either a large word, or a one sentence headline. Use them to chunk your presentation into logical units.</p>
-      <p>Multilingual content:</p>
-      <div class="en-US">This is English.</div>
-      <div class="zh-CN">这是中文（简体）。</div>
-      <div class="zh-TW">這是中文（繁體）。</div>
-      <div class="ja-JP">これは日本語です。</div>
-      <footer class="notes">
-      </footer>
-    </section>
-  </div></div>  
-
-  <div id="shout" class="slide shout"><div>
-    <section>
-      <header>
-        <h2>
-          <div class="en-US">Shout slide</div>
-          <div class="zh-CN">标题</div>
-          <div class="zh-TW">標題</div>
-          <div class="ja-JP">タイトル</div>
-        </h2>
-      </header>
-      <footer class="notes">
-      </footer>
-    </section>
-  </div></div>  
+<!--
 
   <div id="oneline" class="slide oneline"><div>
     <section>
@@ -454,25 +555,6 @@
     </section>
  </div></div>
 
- <div id="animatedlist" class="slide"><div>
-    <section>
-      <header>
-        <h2>Animated List</h2>
-      </header>
-      <ul class="inner">
-        <li class="active">Tigers</li>
-        <li>Elephants</li>
-        <li>Bears</li>
-        <li>Hedgehogs</li>
-        <li>Opossums</li>
-        <li>Hyrax</li>
-        <li>Capybara</li>
-        <li>Oh my&hellip;</li>
-      </ul>
-      <footer class="notes">
-      </footer>
-    </section>
- </div></div>
 
   <div id="onelinelist" class="slide"><div>
     <section>
@@ -572,7 +654,7 @@
         <pre>
         <code><p>Paragraph without encode</p></code>
         <code>&lt;p&gt;Paragraph without encode&lt;/p&gt;</code>
-        <code><!-- for backwards compatibility --></code>
+        <code>&lt!-- for backwards compatibility --&gt;</code>
         </pre>
       <footer class="notes">
       </footer>
@@ -670,22 +752,8 @@
     </footer>
 
     </section>
-  </div></div>
+  </div></div>-->
 
-  <!--
-    To hide progress bar from entire presentation
-    just remove “progress” element.
-    -->
-  <div class="progress"><div></div></div>
-  <div id="langMenuDivId">
-    <!-- Having event.stopPropagation() prevents keypresses on the language menu from affecting slideshow progression -->
-    <select id="langMenuId" onchange="changeLanguage();" onkeydown="event.stopPropagation()">
-      <option value="en-US">English</option>
-      <option value="zh-CN">中文（简体）</option>
-      <option value="zh-TW">中文（繁體）</option>
-      <option value="ja-JP">日本語</option>
-    </select>
-  </div>
   <script src="scripts/script.js"></script>
   <!-- Copyright © 2010–2012 Vadim Makeev — pepelsbey.net -->
 </body>
