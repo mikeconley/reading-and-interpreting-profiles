@@ -152,7 +152,7 @@
  <div id="quick_intro_to_gecko_profiler_addons" class="slide oneline"><div>
     <section>
       <header>
-        <h2>Quick Intro to the Gecko Profiler Add-on</h2>
+        <h2>Quick Intro to the (new!) Gecko Profiler Add-on</h2>
       </header>
 
       <footer class="notes">
@@ -161,7 +161,7 @@
           <li>Show the icon, and the two states</li>
           <li>Do a quick profile dump</li>
           <li>Talk about what's in the panel</li>
-          <li>Call out: Stackwalk, JS Profiling, Multi-thread, Firefox Restart, Settings</li>
+          <li>Show settings? If they're around</li>
         </ul>
       </footer>
     </section>
@@ -173,11 +173,11 @@
         <h2>Capturing Good Profiles</h2>
       </header>
       <ul class="inner">
-        <li class="active">Profile with Nightly</li>
+        <li class="active">Profile with Nightly (because then we get real stacks)</li>
         <li>Be online</li>
-        <li>Make sure the right threads are being sampled</li>
-        <li>Hope that the Symbol Server is up if you're on Windows</li>
-        <li>Click on "Share" in Cleopatra (or save locally) and post the URL / file</li>
+        <li>Hope that the Symbol Server is up, if you're profiling on Windows</li>
+        <li>Make sure the right threads are being sampled. This is usually already the case.</li>
+        <li>Click on "Share" in Cleopatra (or save locally) and post the URL / file. (Note: privacy)</li>
       </ul>
       <footer class="notes">
       </footer>
@@ -187,16 +187,14 @@
  <div id="exploring_cleopatra" class="slide oneline"><div>
     <section>
       <header>
-        <h2>Exploring Cleopatra</h2>
+        <h2>Exploring (the new!) Cleopatra</h2>
       </header>
 
       <footer class="notes">
         <ul>
-          <li>Cleopatra is kind of a constant work-in-progress</li>
-          <li>There are specialized, and sometimes half-done tools in here</li>
-          <li>There are bugs and UI quirks</li>
-          <li>Histograms / Threads (and Frames), then Samples / Call tree, Selections</li>
-          <li>View Options</li>
+          <li>This is the new Cleopatra!</li>
+          <li>What are we looking at? (Histograms / Threads, Samples / Call tree, Selection, "Frame" labels</li>
+          <li>This is a work-in-progress - will have links to contribute at the end.</li>
         </ul>
       </footer>
     </section>
@@ -208,8 +206,8 @@
        <h2>Example Profiles</h2>
      </header>
      <ul class="inner">
-       <li class="active"><a href="https://people.mozilla.org/~bgirard/cleopatra/#report=631e6baa526b699d9ebf25e3b3f9107b38ded194" target="_blank">Here's one</a></li>
-       <li><a href="https://people.mozilla.org/~bgirard/cleopatra/#report=34ef67d91de870465c648d9ef7cbf7a37cc35bd1" target="_blank">And another</a></li>
+       <li class="active"><a href="https://new.cleopatra.io/#report=631e6baa526b699d9ebf25e3b3f9107b38ded194" target="_blank">Here's one</a></li>
+       <li><a href="https://new.cleopatra.io/#report=34ef67d91de870465c648d9ef7cbf7a37cc35bd1" target="_blank">And another</a></li>
        <li><a href="https://bugzilla.mozilla.org/buglist.cgi?list_id=13071287&resolution=---&query_format=advanced&longdesc=cleopatra.io&longdesc_type=anywordssubstr" target="_blank">Or, eff it, let's just look at some at random.</a></li>
      </ul>
      <footer class="notes">
@@ -227,18 +225,28 @@
    </section>
  </div></div>
 
+ <div id="profiles_from_the_crowd" class="slide oneline"><div>
+   <section>
+     <header>
+       <h2>Profiles from the Crowd?</h2>
+     </header>
+     <a href="https://public.etherpad-mozilla.org/p/profiles-from-the-crowd" target="_blank">Profiles from the crowd!</a>
+   </section>
+ </div></div>
+
+
  <div id="advanced_topics" class="slide"><div>
    <section>
      <header>
        <h2>Advanced Topics</h2>
      </header>
      <ul class="inner">
-       <li class="active">Markers</li>
+       <li class="active">Adding Markers</li>
        <li>Labels</li>
        <li><strong>What is causing reflow?</strong></li>
+       <li>Pseudostacks</li>
        <li>Getting profiles from Talos tests on try machines</li>
        <li>Profiling local Windows builds</li>
-       <li><a href="https://github.com/bgirard/cleopatra/pull/62/files" target="_blank">Adding Diagnostic entries</a></li>
      </ul>
      <footer class="notes">
        <ul>
@@ -248,33 +256,68 @@
    </section>
  </div></div>
 
- <div id="general_tips" class="slide"><div>
+
+ <div id="future_work" class="slide"><div>
    <section>
      <header>
-       <h2>General Tips</h2>
+       <h2>Future Work</h2>
      </header>
      <ul class="inner">
-       <li class="active">Use Markers to make it easy to know what you care about</li>
-       <li>Making one part faster doesn't necessarily make the whole thing faster</li>
-       <li></li>
-       <li>Getting profiles from Talos tests on try machines</li>
-       <li>Profiling local Windows builds</li>
+       <li class="active">Displaying UI events</li>
+       <li>Displaying browser events</li>
+       <li>TaskTracer</li>
+       <li>Comparing Profiles</li>
+     </ul>
+   </section>
+ </div></div>
+
+ <div id="success_stories" class="slide"><div>
+   <section>
+     <header>
+       <h2>Success Stories</h2>
+     </header>
+     <ul class="inner">
+       <li class="active"><a href="https://new.cleopatra.io/#report=631e6baa526b699d9ebf25e3b3f9107b38ded194" target="_blank">Profiles like this helped e10s beat non-e10s at the tpaint talos test</a></li>
+       <li>Min-Vid</li>
+       <li>Findbar</li>
+       <li>And many more!</li>
      </ul>
      <footer class="notes">
      </footer>
    </section>
  </div></div>
 
- <div id="alternatives" class="slide"><div>
+ <div id="contributing" class="slide"><div>
    <section>
      <header>
-       <h2>Alternatives</h2>
+       <h2>You can contribute!</h2>
      </header>
      <ul class="inner">
-       <li class="active">XCode has Instruments for OS X</li>
-       <li>Windows has WPA (Windows Performance Analyzer) aka xPerf
-       <li>Concurrency Visualizer for Visual Studio is also good</li>
-       <li>Linux has Zoom (also apparently works on OS X and Windows)</li>
+       <li class="active"><a href="https://github.com/mstange/cleopatra" target="_blank">Cleopatra</a></li>
+       <li><a href="https://github.com/mstange/gecko-profiler-addon" target="_blank">The Gecko Profiler Add-on</a></li>
+       <li>For bugs in how Gecko profiles things, <a href="https://bugzilla.mozilla.org/enter_bug.cgi?product=Core&component=Gecko%20Profiler" target="_blank">Core :: Gecko Profiler</a></li>
+       <li>File bugs to let us know what you need - <em>these tools are for all of us</em>.</li>
+     </ul>
+     <footer class="notes">
+     </footer>
+   </section>
+ </div></div>
+
+ <div id="additional_info" class="slide"><div>
+   <section>
+     <header>
+       <h2>Additional Info (If there's time)</h2>
+     </header>
+     <ul class="inner">
+       <li class="active">Which threads are profiled?</li>
+       <li>Alternative tools
+         <ul>
+          <li>XCode / Instruments for OS X</li>
+          <li>Windows Performance Analyzer / XPerf for Windows</li>
+          <li>Concurrency Visualizer for Visual Studio is also good</li>
+          <li>Linux has Zoom (also apparently works on OS X and Windows)</li>
+         </ul>
+       </li>
      </ul>
      <footer class="notes">
      </footer>
@@ -284,7 +327,7 @@
  <div id="questions_or_feedback" class="slide oneline"><div>
    <section>
      <header>
-       <h2>Questions or Feedback?</h2>
+       <h2>Thanks! Questions or Feedback?</h2>
      </header>
      <footer class="notes">
      </footer>
