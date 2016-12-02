@@ -1,20 +1,20 @@
 <!DOCTYPE HTML>
 <!-- <html lang="en-US"> -->
 <html lang="en-US" class="fade">
-<!-- 
+<!--
   ^ a class of "fade" makes slides fade smoothly into one another
  -->
 <!-- <html lang="en-US" class="nonumbers"> -->
-<!-- 
-  If you want no numbers on the slides add a "nonumbers" class 
+<!--
+  If you want no numbers on the slides add a "nonumbers" class
   to the HTML element.
-  Adding a class of "fade" will make slides fade into another. 
+  Adding a class of "fade" will make slides fade into another.
 -->
 <head>
   <meta charset="UTF-8">
   <title>Reading and Interpreting Gecko Profiles</title>
-<!-- 
-  If you upload your slides to the web, ensure that you have 
+<!--
+  If you upload your slides to the web, ensure that you have
   a good title - this shows up in search results and social
   media links
  -->
@@ -23,23 +23,22 @@
 </head>
 <body class="list">
   <header class="caption">
-    <h1>Reading and Interpreting Gecko Profiles</h1>
+    <h1>Reading and Interpreting Gecko Profiles - Hawaii 2016 Edition</h1>
     <p class="footer">
-      Mike Conley, :mconley,
-      <a href="http://twitter.com/mikeconley">@mikeconley</a>
+      <a href="https://mozillians.org/u/mstange" target="_blank">Markus Stange (:mstange)</a>, <a href="https://mozillians.org/u/mconley" target="_blank">Mike Conley (:mconley)</a>
     </p>
   </header>
   <aside class="talkdescription">
     <p>This slide deck is using the shower system - roll over the previews to see the notes and click any slide to go into presentation mode. Then use keys to navigate. <button onclick="goFullScreen()">Go fullscreen</button></p>
     <p class="abstract">
       <strong>Abstract: </strong>
-       Gecko has a built-in sampling profiler. Reading Gecko profiles can often reveal bottlenecks that other tools might not. This talk is about doing such readings.
+       Gecko has a built-in sampling profiler. Reading Gecko profiles can often reveal bottlenecks that other tools might not. This talk introduces profiling, introduces you to our analysis tool (Cleopatra), and walks the audience through some live, on-the-spot analyses.
     </p>
   </aside>
 
-<!-- 
+<!--
     Simply copy the whole block for each slide you want.
-  Special slides get extra classes. Each slide needs an ID 
+  Special slides get extra classes. Each slide needs an ID
   to allow for bookmarking and target jumping.
 -->
 
@@ -55,19 +54,40 @@
   <div id="cover" class="slide oneline"><div>
     <section>
       <header>
-        <h2>Reading and Interpreting Gecko Profiles</h2>
+        <h2>Reading and Interpreting Gecko Profiles with Cleopatra</h2>
       </header>
     </section>
   </div></div>
 
-  <div id="hi" class="slide oneline"><div>
+  <div id="preparation" class="slide oneline"><div>
+    <section>
+      <header>
+        <h2>Preparation: Install <a href="https://github.com/mstange/gecko-profiler-addon" target="_blank">Add-on</a></h2>
+      </header>
+      <footer class="notes">
+        <ul>
+          <li>We need you to install an add-on</li>
+          <li>Feel free to do this while we introduce ourselves - we'd prefer you pay more attention to the analysis stuff</li>
+          <li>Preferably, you need to be using Nightly, but this will kind of work on other channels as well (we'll explain later)</li>
+          <li>This add-on is used to grab the profile from Firefox, and then send it to Cleopatra, a web-app to analyze</li>
+        </ul>
+      </footer>
+    </section>
+  </div></div>
+
+  <div id="hi_markus" class="slide oneline"><div>
+    <section>
+      <header>
+        <h2>Markus Stange, :mstange</h2>
+      </header>
+    </section>
+  </div></div>
+
+  <div id="hi_mconley" class="slide oneline"><div>
     <section>
       <header>
         <h2>Mike Conley, :mconley</h2>
       </header>
-      <footer class="notes">
-        I wouldn't call myself an expert with the Gecko Profiler. There are other people in this room who probably know more about it than I do. But I'm written some patches for it, I've wrestled with it, and I've gotten useful data out of it. I'm hoping to pass those skills along.
-      </footer>
     </section>
   </div></div>
 
@@ -78,27 +98,13 @@
       </header>
       <footer class="notes">
         <ul>
-          <li>Any answer is okay - there's no test, and I'm not going to call on you</li>
+          <li>Let's just do a show of hands. There's no right or wrong answer here - we're just getting a sense of who's in the room.</li>
           <li>Who here knows what a sampling profiler is?</li>
           <li>Who here has used the Gecko Profiler Add-on and Cleopatra?</li>
           <li>Who here has used the DevTools Performance tool?</li>
-          <li>Anyone here from Support or QA?</li>
-        </ul>
-      </footer>
-    </section>
-  </div></div>
-
-  <div id="quick_primer" class="slide oneline"><div>
-    <section>
-      <header>
-        <h2>A Profiling Primer</h2>
-      </header>
-      <footer class="notes">
-        <ul>
-          <li>Snapshots of what Firefox is doing every so often</li>
-          <li>Defaults to every 10 milliseconds</li>
-          <li>We can try to get smaller intervals, but this can affect results</li>
-          <li>Circular buffer, like a flight recorder</li>
+          <li>Who here has a reproducible performance problem that they need to investigate?</li>
+          <li>Who here has a performance profile that they want to learn how to analyze?</li>
+          <li>Okay - now just shout out - what performance tools have people used in here?</li>
         </ul>
       </footer>
     </section>
@@ -107,19 +113,40 @@
  <div id="general_workflow" class="slide"><div>
     <section>
       <header>
-        <h2>General Workflow for Profilers</h2>
+        <h2>When should you get a Performance Profile?</h2>
       </header>
       <ul class="inner">
-        <li class="active">Notice that something is performing poorly</li>
+        <li class="active">Notice that Firefox is performing poorly</li>
         <li>Start recording with a profiler</li>
         <li>Reproduce the poor behaviour</li>
         <li>Dump the profile</li>
-        <li><strong>Analyze the profile</strong></li>
+        <li><strong>Analyze the profile in Cleopatra (or get someone else to do it)</strong></li>
+        <li>Find and eliminate bottlenecks</li>
+        <li>Repeat</li>
       </ul>
       <footer class="notes">
-        This last one is what I'm hoping to spend most of my time on today.
+        The analysis part is what we're hoping to focus on the most today - we want to teach more people to do that part.
       </footer>
     </section>
+ </div></div>
+
+ <div id="quick_primer" class="slide oneline"><div>
+   <section>
+     <header>
+       <h2>What is a Performance Profile?</h2>
+     </header>
+     <footer class="notes">
+       <ul>
+         <li>Snapshots of what Firefox is doing every so often</li>
+         <li>Defaults to every 10 milliseconds</li>
+         <li>We can try to get smaller intervals, but this can affect results</li>
+         <li>Those snapshots are callstacks.</li>
+         <li>On Nightly, those callstacks are memory addresses, which are most incomprehensible - so there's a symbolication step.</li>
+         <li>Circular buffer, like a flight recorder</li>
+         <li>These profiles contain private stuff sometimes</li>
+       </ul>
+     </footer>
+   </section>
  </div></div>
 
  <div id="quick_intro_to_gecko_profiler_addons" class="slide oneline"><div>
